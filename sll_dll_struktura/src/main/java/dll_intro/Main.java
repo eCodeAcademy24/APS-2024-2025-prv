@@ -42,7 +42,6 @@ class DLL<E> {
             return ret;
         } else
             return 0;
-
     }
 
     public DLLNode<E> find(E o) {
@@ -139,7 +138,6 @@ class DLL<E> {
         node.pred.succ = node.succ;
         node.succ.pred = node.pred;
         return node.element;
-
     }
 
     @Override
@@ -176,7 +174,6 @@ class DLL<E> {
     }
 
     public DLLNode<E> getLast() {
-
         return last;
     }
 }
