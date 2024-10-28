@@ -1,19 +1,6 @@
 package PalindromeDLL;
 
 import java.util.Scanner;
-
-//      Дадена е двојно поврзана листа со N јазли каде секој јазел содржи по еден карактер (буква).
-//        Да се провери дали двојно поврзаната листа е палиндром: односно ако ја изминете од почеток до крај и од крај
-//        до почеток, дали ќе добиете ист збор. Во првиот ред од влезот даден е бројот на јазли во листата N,
-//        а во вториот ред се дадени броевите. На излез треба да се испечати 1 ако листата е палиндром, -1 ако не е.
-//
-//        For example:
-//
-//        Input
-//        5
-//        1 2 3 1 2
-//        Result
-//        -1
 class DLLNode<E> {
     protected E element;
     protected DLLNode<E> pred, succ;
@@ -145,7 +132,6 @@ class DLL<E> {
     }
 
     public DLLNode<E> getLast() {
-
         return last;
     }
 
@@ -153,14 +139,31 @@ class DLL<E> {
 
 public class PalindromeDLL {
 
+//Дадена е двојно поврзана листа со N јазли каде секој јазел содржи по еден карактер (буква).
+//Да се провери дали двојно поврзаната листа е палиндром: односно ако ја изминете од почеток до крај и од крај
+//до почеток, дали ќе добиете ист збор. Во првиот ред од влезот даден е бројот на јазли во листата N,
+//а во вториот ред се дадени броевите. На излез треба да се испечати 1 ако листата е палиндром, -1 ако не е.
+//
+//For example:
+//
+//Input
+//5
+//1 2 3 1 2
+//Result
+//-1
+
+// 1 1 5 1 1 -> 1
+// 1 2 3 4 5 -> -1
+
     public static int isItPalindrome(DLL<Integer> list) {
         DLLNode<Integer> start = list.getFirst();
         DLLNode<Integer> end = list.getLast();
 
-        while (start != null && end != null && start != end) {
-            if (start.element != end.element) {
+        while(start != null && end != null && start != end) {
+            if(!start.element.equals(end.element)) { // != еквивалентно со ! .equals
                 return -1;
             }
+
             start = start.succ;
             end = end.pred;
         }
@@ -178,5 +181,4 @@ public class PalindromeDLL {
         in.close();
         System.out.println(isItPalindrome(list));
     }
-
 }

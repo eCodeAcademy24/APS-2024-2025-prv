@@ -19,23 +19,23 @@ class DLLNode<E> {
 }
 
 class DLL<E> {
-    private DLLNode<E> first, last;
+    private DLLNode<E> current, last;
 
     public DLL() {
         // Construct an empty SLL
-        this.first = null;
+        this.current = null;
         this.last = null;
     }
 
     public void deleteList() {
-        first = null;
+        current = null;
         last = null;
     }
 
     public int length() {
         int ret;
-        if (first != null) {
-            DLLNode<E> tmp = first;
+        if (current != null) {
+            DLLNode<E> tmp = current;
             ret = 1;
             while (tmp.succ != null) {
                 tmp = tmp.succ;
@@ -48,8 +48,8 @@ class DLL<E> {
     }
 
     public DLLNode<E> find(E o) {
-        if (first != null) {
-            DLLNode<E> tmp = first;
+        if (current != null) {
+            DLLNode<E> tmp = current;
             while (tmp.element != o && tmp.succ != null)
                 tmp = tmp.succ;
             if (tmp.element == o) {
@@ -60,20 +60,20 @@ class DLL<E> {
         } else {
             System.out.println("Listata e prazna");
         }
-        return first;
+        return current;
     }
 
     public void insertFirst(E o) {
-        DLLNode<E> ins = new DLLNode<E>(o, null, first);
-        if (first == null)
+        DLLNode<E> ins = new DLLNode<E>(o, null, current);
+        if (current == null)
             last = ins;
         else
-            first.pred = ins;
-        first = ins;
+            current.pred = ins;
+        current = ins;
     }
 
     public void insertLast(E o) {
-        if (first == null)
+        if (current == null)
             insertFirst(o);
         else {
             DLLNode<E> ins = new DLLNode<E>(o, last, null);
@@ -93,7 +93,7 @@ class DLL<E> {
     }
 
     public void insertBefore(E o, DLLNode<E> before) {
-        if (before == first) {
+        if (before == current) {
             insertFirst(o);
             return;
         }
@@ -103,11 +103,11 @@ class DLL<E> {
     }
 
     public E deleteFirst() {
-        if (first != null) {
-            DLLNode<E> tmp = first;
-            first = first.succ;
-            if (first != null) first.pred = null;
-            if (first == null)
+        if (current != null) {
+            DLLNode<E> tmp = current;
+            current = current.succ;
+            if (current != null) current.pred = null;
+            if (current == null)
                 last = null;
             return tmp.element;
         } else
@@ -115,8 +115,8 @@ class DLL<E> {
     }
 
     public E deleteLast() {
-        if (first != null) {
-            if (first.succ == null)
+        if (current != null) {
+            if (current.succ == null)
                 return deleteFirst();
             else {
                 DLLNode<E> tmp = last;
@@ -130,7 +130,7 @@ class DLL<E> {
     }
 
     public E delete(DLLNode<E> node) {
-        if (node == first) {
+        if (node == current) {
             deleteFirst();
             return node.element;
         }
@@ -147,8 +147,8 @@ class DLL<E> {
     @Override
     public String toString() {
         String ret = new String();
-        if (first != null) {
-            DLLNode<E> tmp = first;
+        if (current != null) {
+            DLLNode<E> tmp = current;
             ret += tmp + "<->";
             while (tmp.succ != null) {
                 tmp = tmp.succ;
@@ -174,16 +174,11 @@ class DLL<E> {
     }
 
     public DLLNode<E> getFirst() {
-        return first;
+        return current;
     }
 
     public DLLNode<E> getLast() {
-
         return last;
-    }
-
-    public void izvadiDupliIPrebroj() {
-
     }
 }
 
@@ -191,10 +186,9 @@ class DLL<E> {
 //Да се напише алгоритам кој ќе ги вметне сите јазли од втората листа во првата листа без да ја наруши нејзината подреденост.
 //Влез:
 //10
-//tmp
 //2 4 5 7 7 9 11 12 15 17
+
 //7
-//tmp2
 //1 18 7 8 9 3 16
 //Излез:
 //1 2 3 4 5 7 7 7 8 9 9 11 12 15 16 17 18
@@ -202,28 +196,28 @@ class DLL<E> {
 public class MergeDLLs {
 
     public static void merging(DLL<Integer> lista, DLL<Integer> lista2) {
-        DLLNode<Integer> first = lista.getFirst();
-        DLLNode<Integer> helpingNode = lista2.getFirst();
+        DLLNode<Integer> mainIterator = lista2.getFirst();
 
-        while(helpingNode != null) {
-            first = lista.getFirst();
-            boolean flag = true; // deka momentalniot element e najgolem
-            while(first != null) {
-                if(first.element > helpingNode.element) {
-                    lista.insertBefore(helpingNode.element, first);
-                    lista2.delete(helpingNode);
-                    flag = false; // sme nashle takov da ni e obratno na pretpostavenoto
+        while(mainIterator != null) {
+            DLLNode<Integer> current = lista.getFirst();
+            boolean flag = true;
+
+            while(current != null) {
+                if(current.element > mainIterator.element) {
+                    lista.insertBefore(mainIterator.element, current);
+                    lista2.delete(mainIterator);
+                    flag = false;
                     break;
                 }
 
-                first = first.succ;
+                current = current.succ;
             }
 
             if(flag) {
-                lista.insertLast(helpingNode.element);
+                lista.insertLast(mainIterator.element);
             }
 
-            helpingNode = helpingNode.succ;
+            mainIterator = mainIterator.succ;
         }
     }
 
