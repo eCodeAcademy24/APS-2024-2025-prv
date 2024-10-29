@@ -176,7 +176,6 @@ class Player implements Comparable<Player> {
         this.years = years;
     }
 
-
     @Override
     public int compareTo(Player o) {
         if (o.rating > this.rating)
@@ -190,12 +189,57 @@ class Player implements Comparable<Player> {
                 return -1;
         }
         return 0;
-
     }
 }
 
 
 public class Football {
+
+    //Еден фудбалски клуб се состои од репрезентативен тим и тим на млади сило (под 21 година), секој од тимовите се состои од 11 главни играчи
+    // Тренерот на фудбалскиот тим одлучува да направи освежување во поставата на реп. тим. Неговата цел е да ги замени првите N играчи
+    // кои имаат најголемо искуство во репрезентативниот тим со топ N играчи со најдобар рејтинг од тимот на млади сили (соодветно на позициите)
+
+    //Двата тима се претставени со две еднострано поврзани листи. Ваша задача е да ја имплементирате само функцијата
+    //changePlayers(SLL<Player> representative_team, SLL<Player> under_21_team, int N) со чија помош ќе се изврши промената на N-те играчи
+    //во листата representative_team.
+
+    //На влез е даден број на секој играч, рејтинг и години искуство одделени со празно место. Прво се дадени 11 реда за секој играч
+    //од репрезентативниот тим, а потоа следните 11 реда за играчите од тимот на млади сили.
+
+    // Во крајниот ред е даден бројот N-број на играчи кои треба да се заменат од реп. тим
+
+    // На излез се печати листата на броеви на сите играчи од новиот репрезентативен тим
+
+    public static void changePlayers(SLL<Player> representative_team, SLL<Player> under_21_team, int N) {
+
+        for(int i = 0; i < N; i++) {
+            SLLNode<Player> iteratorRepresentative = representative_team.getFirst().succ;
+            SLLNode<Player> mostYears = representative_team.getFirst();
+
+            while(iteratorRepresentative != null) {
+                if(iteratorRepresentative.element.years >= mostYears.element.years) {
+                    mostYears = iteratorRepresentative;
+                }
+
+                iteratorRepresentative = iteratorRepresentative.succ;
+            }
+
+            SLLNode<Player> iteratorUnder21 = under_21_team.getFirst().succ;
+            SLLNode<Player> bestPlayer = under_21_team.getFirst();
+
+            while (iteratorUnder21 != null) {
+                if (iteratorUnder21.element.rating >= bestPlayer.element.rating) {
+                    bestPlayer = iteratorUnder21;
+                }
+
+                iteratorUnder21 = iteratorUnder21.succ;
+            }
+
+            representative_team.insertBefore(bestPlayer.element, mostYears);
+            representative_team.delete(mostYears);
+            under_21_team.delete(bestPlayer);
+        }
+    }
 
     public static void sort(SLL<Player> list) {
         SLLNode<Player> tmp1 = list.getFirst();
@@ -212,69 +256,6 @@ public class Football {
 
             tmp1 = tmp1.succ;
         }
-    }
-
-    //1 1 3
-    //2 2 3
-    //3 3 4
-    //4 4 5
-    //5 5 5
-    //6 6 6
-    //7 7 6
-    //8 8 7
-    //9 9 7
-    //10 10 8
-    //11 11 8
-    //12 3 2
-    //13 2 1
-    //14 1 5
-    //15 5 3
-    //16 5 4
-    //17 10 2
-    //18 3 3
-    //19 2 1
-    //20 9 3
-    //21 9 1
-    //22 1 1
-    //2
-
-    public static void changePlayers(SLL<Player> representative_team, SLL<Player> under_21_team, int N) {
-        //Вашиот код тука
-        int counter = 0;
-        while (counter != N) {
-            ++counter;
-
-            SLLNode<Player> tmp = representative_team.getFirst();
-            SLLNode<Player> najiskusen = tmp;
-
-            tmp = tmp.succ;
-            while (tmp != null) {
-                if (tmp.element.years >= najiskusen.element.years) {
-                    najiskusen = tmp;
-                }
-
-                tmp = tmp.succ;
-            }
-
-            SLLNode<Player> tmp2 = under_21_team.getFirst();
-            SLLNode<Player> najdobar = under_21_team.getFirst();
-
-            tmp2 = tmp2.succ;
-
-            while (tmp2 != null) {
-                if (tmp2.element.rating >= najdobar.element.rating) {
-                    najdobar = tmp2;
-                }
-
-                tmp2 = tmp2.succ;
-            }
-
-            representative_team.insertBefore(najdobar.element, najiskusen);
-            representative_team.delete(najiskusen);
-            under_21_team.delete(najdobar);
-
-        }
-
     }
 
     public static void main(String[] args) throws IOException {
@@ -296,7 +277,6 @@ public class Football {
         sort(under_21_team);
         int N = Integer.parseInt(bf.readLine());
 
-
         changePlayers(representative_team, under_21_team, N);
         SLLNode<Player> tmp = representative_team.getFirst();
 
@@ -304,8 +284,6 @@ public class Football {
             System.out.print(tmp.element.number + " ");
             tmp = tmp.succ;
         }
-
-
     }
 }
 

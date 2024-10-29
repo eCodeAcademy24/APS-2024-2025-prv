@@ -1,32 +1,53 @@
 package Finance;
 
 import java.util.*;
-//        Во рамки на еден форум постојат повеке отворени дискусии, т.ш. за секоја дискусија се чува податок за: ИД
-//        на дискусиата.(int id), популарност (int popularity), како и броJ на корисници кои се активни (int users)
-//        Популарноста на дискусијата е вредност во ранг (1, 100], каде што популарност 100 означува највоисока популарност.
-//        Во рамки на форумот има повеке отворени дискусии, кои можат да се поделат во две еднострано поврзани листи.
 
-//        Во првата листа се чуваат подотоците за дискусиите на тема Health,
-//        а додека во втората листа се чуваат податоците за дискусиите на тема Finance.
+class Discussion
+{
+    private int id;
+    private int popularity;
+    private int users;
 
-//        За секоа дискусија може да се пресмета нејзината важност како производ на нејзината популарност и бројот на
-//        активни корисници.
-//        importance = popularity * users
+    public Discussion(int id, int popularity, int users) {
+        this.id = id;
+        this.popularity = popularity;
+        this.users = users;
+    }
 
-//        Ваша задача е од дискусиите на тема Finance да се отстрани дискусијата со најмала важност.
-//        Потоа, во дискусиите на тема Finance да се додаде нова дискусија со идентични податоци како најважната дискусија од
-//        темата Health. Додавањето на дискусијата се прави на крај на листата која ги чува податоците за дискусиите на таа тема.
-//
-//        Влез:
-//        Во првиот ред е даден броот на дискусии од Health темата.
-//        Во вториот ред е даден броот на дискусии од Finance темата
-//        Во секо] следен ред се дадени податоци за една дискусија, одделени со празно место, во формат id popularity users.
-//        Притоа, прво се дадени податоците за дискусиите од Health листата, по што следуваат податоците за дискусиите од
-//        Finance листата.
-//
-//        Излез:
-//        Во првиот ред id на сите дискусии од Health листата
-//        Во вториот ред id на сите дискусии од Finance листата.
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(int popularity) {
+        this.popularity = popularity;
+    }
+
+    public int getUsers() {
+        return users;
+    }
+
+    public void setUsers(int users) {
+        this.users = users;
+    }
+
+    public int calculateImportance() {
+        return popularity * users;
+    }
+
+    public String toString()
+    {
+        return id + "";
+    }
+}
+
 class SLLNode<E> {
     protected E element;
     protected SLLNode<E> succ;
@@ -187,8 +208,35 @@ class SLL<E> {
 }
 public class Main
 {
+
+//        Во рамки на еден форум постојат повеке отворени дискусии, т.ш. за секоја дискусија се чува податок за: ИД
+//        на дискусиата.(int id), популарност (int popularity), како и броJ на корисници кои се активни (int users)
+//        Популарноста на дискусијата е вредност во ранг (1, 100], каде што популарност 100 означува највоисока популарност.
+//        Во рамки на форумот има повеке отворени дискусии, кои можат да се поделат во две еднострано поврзани листи.
+
+//        Во првата листа се чуваат подотоците за дискусиите на тема Health,
+//        а додека во втората листа се чуваат податоците за дискусиите на тема Finance.
+
+//        За секоа дискусија може да се пресмета нејзината важност како производ на нејзината популарност и бројот на
+//        активни корисници.
+//        importance = popularity * users
+
+//        Ваша задача е од дискусиите на тема Finance да се отстрани дискусијата со најмала важност.
+//        Потоа, во дискусиите на тема Finance да се додаде нова дискусија со идентични податоци како најважната дискусија од
+//        темата Health. Додавањето на дискусијата се прави на крај на листата која ги чува податоците за дискусиите на таа тема.
+//
+//        Влез:
+//        Во првиот ред е даден броот на дискусии од Health темата.
+//        Во вториот ред е даден броот на дискусии од Finance темата
+//        Во секо] следен ред се дадени податоци за една дискусија, одделени со празно место, во формат id popularity users.
+//        Притоа, прво се дадени податоците за дискусиите од Health листата, по што следуваат податоците за дискусиите од
+//        Finance листата.
+//
+//        Излез:
+//        Во првиот ред id на сите дискусии од Health листата
+//        Во вториот ред id на сите дискусии од Finance листата.
+
     public static void forum(SLL<Discussion> health, SLL<Discussion> finance){
-        // TODO: ИМПЛЕМЕНТИРАЛЈТЕ ЈА ФУНКЦИЈАТА
         SLLNode<Discussion> leastImportantFinance = finance.getFirst();
         SLLNode<Discussion> financeIterator = finance.getFirst().succ;
 
@@ -243,51 +291,5 @@ public class Main
 
         System.out.println(health);
         System.out.println(finance);
-    }
-}
-
-class Discussion
-{
-    private int id;
-    private int popularity;
-    private int users;
-
-    public Discussion(int id, int popularity, int users) {
-        this.id = id;
-        this.popularity = popularity;
-        this.users = users;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getPopularity() {
-        return popularity;
-    }
-
-    public void setPopularity(int popularity) {
-        this.popularity = popularity;
-    }
-
-    public int getUsers() {
-        return users;
-    }
-
-    public void setUsers(int users) {
-        this.users = users;
-    }
-
-    public int calculateImportance() {
-        return popularity * users;
-    }
-
-    public String toString()
-    {
-        return id + "";
     }
 }

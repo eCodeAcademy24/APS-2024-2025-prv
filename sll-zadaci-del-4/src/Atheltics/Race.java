@@ -1,32 +1,10 @@
 package Atheltics;
 
 import java.util.Scanner;
-//         Податоците за атлетичарите кои учествувале на трките на 100т се чуваат во две еднострано поврзани листи.
-//
-//        Во првата листа се чуваат податоците за атлетичарите кои победиле на трките во изминатите години
-//        (не вклучувајќи тековната година),
-//        а во втората листа се чуваат податоците за атлетичарите кои се натпреварувале во тековната година.
 
-//        И кај двете листи, во секо од јазлите се чуваат број за идентификациа (id) и време (во секунди како децимален број)
-//        за кое атлетичарот jа завршил трката.
-
-//        Потребно е да се изберат атлетичари, за тековната година, кои ке продолжат на следната Олимпијадата.
-
-//        За таа цел, потребно е од листата на атлетичари за тековната година да се отстранат (избришат) сите атлетичари кои
-//        имаат поголемо/ полошо време од максималното (најлошото) време кое го остварил неко од победниците во изминатите години.
-//        Влез:
-//        Во првиот ред е даден броот на победници од изминатите години.
-//        Во вториот ред е даден броот на атлетичари од тековната година.
-//        Во следните редови се дадени паровите податоци за секо атлетичар, одделени со празно место, во формат id време.
-
-//        Излез:
-//        Во еден ред і на сите атлетичари кои ке продолжат на Олимпизадата.
-//        Забелешка: Даден е целосниот код на структурата козашто треба да се користи. Дадена е и тест класата Race.java, со целосно имплементиран Input и output. Потребно е да се менува само во рамки на vold competition (SLL «Athlete> prevWinners, SLL «Athlete>
-//        currYearRunners) функциата. Притоа, бришенето треба да биде имплементирано како бришенье на цел зазел!
 class Athlete {
     private int id;
     private float time;
-    private int accounts;
 
     public Athlete(int id, float time) {
         this.id = id;
@@ -205,27 +183,49 @@ class SLL<E> {
 
 
 public class Race {
-    // todo: complete function
+
+//       Податоците за атлетичарите кои учествувале на трките на 100 метри се чуваат во две еднострано поврзани листи.
+//
+//        Во првата листа се чуваат податоците за атлетичарите кои победиле на трките во изминатите години
+//        (не вклучувајќи тековната година),
+//        а во втората листа се чуваат податоците за атлетичарите кои се натпреварувале во тековната година.
+
+//        И кај двете листи, во секо од јазлите се чуваат број за идентификациа (id) и време (во секунди како децимален број)
+//        за кое атлетичарот jа завршил трката.
+
+//        Потребно е да се изберат атлетичари, за тековната година, кои ке продолжат на следната Олимпијадата.
+
+//        За таа цел, потребно е од листата на атлетичари за тековната година да се отстранат (избришат) сите атлетичари кои
+//        имаат поголемо/ полошо време од максималното (најлошото) време кое го остварил некој од победниците во изминатите години.
+//        Влез:
+//        Во првиот ред е даден броот на победници од изминатите години.
+//        Во вториот ред е даден броот на атлетичари од тековната година.
+//        Во следните редови се дадени паровите податоци за секо атлетичар, одделени со празно место, во формат id време.
+
+//        Излез:
+//        Во еден ред і на сите атлетичари кои ке продолжат на Олимпизадата.
+//        Забелешка: Даден е целосниот код на структурата козашто треба да се користи. Дадена е и тест класата Race.java, со целосно имплементиран Input и output. Потребно е да се менува само во рамки на vold competition (SLL «Athlete> prevWinners, SLL «Athlete>
+//        currYearRunners) функциата. Притоа, бришенето треба да биде имплементирано како бришенье на цел зазел!
+
     public static void competition(SLL<Athlete> prevWinners, SLL<Athlete> currYearRunners) {
-         SLLNode<Athlete> prevWinnerIterator = prevWinners.getFirst();
-         SLLNode<Athlete> currYearRunnersIterator = currYearRunners.getFirst();
+        SLLNode<Athlete> prevWinnerIterator = prevWinners.getFirst();
+        SLLNode<Athlete> currYearRunnersIterator = currYearRunners.getFirst();
 
-         double worstTime = 0;
-         while(prevWinnerIterator != null){
-             if(prevWinnerIterator.element.getTime() > worstTime){
-                 worstTime = prevWinnerIterator.element.getTime();
-             }
+        double worstTime = 0;
+        while(prevWinnerIterator != null) {
+            if(prevWinnerIterator.element.getTime() > worstTime) {
+                worstTime = prevWinnerIterator.element.getTime();
+            }
+            prevWinnerIterator = prevWinnerIterator.succ;
+        }
 
-             prevWinnerIterator = prevWinnerIterator.succ;
-         }
+        while(currYearRunnersIterator != null) {
+            if(currYearRunnersIterator.element.getTime() > worstTime) {
+                currYearRunners.delete(currYearRunnersIterator);
+            }
 
-         while(currYearRunnersIterator != null){
-             if(currYearRunnersIterator.element.getTime() > worstTime){
-                 currYearRunners.delete(currYearRunnersIterator);
-             }
-
-             currYearRunnersIterator = currYearRunnersIterator.succ;
-         }
+            currYearRunnersIterator = currYearRunnersIterator.succ;
+        }
     }
 
     public static void main(String[] args) {
@@ -237,8 +237,8 @@ public class Race {
         SLL<Athlete> tekovna = new SLL<Athlete>();
 
         for (int i = 0; i < num1; i++) {
-            String line = scanner.nextLine();
-            String[] parts = line.split("\\s+");
+            String line = scanner.nextLine(); // 1 1.85
+            String[] parts = line.split("\\s+"); // {1, 1.85}
             olimpijada.insertLast(new Athlete(Integer.parseInt(parts[0]), Float.parseFloat(parts[1])));
         }
 
@@ -249,6 +249,6 @@ public class Race {
         }
 
         competition(olimpijada, tekovna);
-        System.out.println(tekovna.toString());
+        System.out.println(tekovna);
     }
 }

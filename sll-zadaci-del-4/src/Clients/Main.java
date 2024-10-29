@@ -1,50 +1,7 @@
 package Clients;
+import java.lang.ref.Cleaner;
 import java.util.Scanner;
-//        Во рамки на една банка се користи систем кој ги чува податоите за клиентите на банката. Во тој систем податоците за
-//        еден клиент
-//        се дадени во формат: id на корисник (int id), години на лојалност (int loyalty), број на активни трансакциски сметки
-//        (int accounts)
-//
-//        Имајќи предвид дека банката постои 50 години, ниту еден корисник не може да има лојалност поголема од 50.
-//
-//
-//        Во рамки на системот, корисниците се чуваат од две еднострани поврзани листи. Во првата листа се чуваат податоците
-//        за обичните
-//        корисници (Normal), додека пак во втората листа се чуваат податоците за корисниците со посебни привилегии (Golden).
-//
-//
-//        За секој клиент може да се пресмета неговата важност за банката според формулата.
-//        ------> importance = loyalty * 10 + accounts * 20
-//
-//        Банката решила дека сака да направи измена, односно да го отстрани најмалку важниот клиент од Golden листата и да го
-//        стави на
-//        крај на Normal листата. Потоа, да го отстрани најмногу важниот клиент од Normal листата и да го стави на крај на
-//        Golden листата.
-//
-//        Внимавај: Ако има повеќе клиенти со иста важност, се отстранува првиот.
-//
-//        Влез:
-//        Во првиот ред е даден броот на клиенти од Normal листата.
-//        Во вториот ред е даден броот на дискусии од Golden листата.
-//        Во секоj следен ред се дадени податоци за еден клиент, одделени со празно место, во формат id loyalty accounts.
-//        Притоа, прво се дадони податоците за клиентите од Normal листата, по што следуваат податоците за клиентите од
-//        Golden листата.
-//
-//        Излез:
-//        Во првиот ред id на сите клиенти од Normal листата.
-//        Во вториот ред id на сите клиенти од Golden листата.
-//
-//        Тест пример:
-//        3
-//        2
-//        5636 38 8
-//        1705 49 4
-//        3606 48 1
-//        6698 40 2
-//        1178 2 40
-//
-//        5636 3606 6698
-//        1178 1705
+
 class Client {
     private int id;
     private int loyalty;
@@ -247,44 +204,70 @@ class SLL<E> {
 
 public class Main {
 
+//        Во рамки на една банка се користи систем кој ги чува податоците за клиентите на банката. Во тој систем податоците за
+//        еден клиент
+//        се дадени во формат: id на корисник (int id), години на лојалност (int loyalty), број на активни трансакциски сметки
+//        (int accounts)
+//
+//        Имајќи предвид дека банката постои 50 години, ниту еден корисник не може да има лојалност поголема од 50.
+//
+//        Во рамки на системот, корисниците се чуваат од две еднострани поврзани листи. Во првата листа се чуваат податоците
+//        за обичните
+//        корисници (Normal), додека пак во втората листа се чуваат податоците за корисниците со посебни привилегии (Golden).
+//
+//
+//        За секој клиент може да се пресмета неговата важност за банката според формулата.
+//        ------> importance = loyalty * 10 + accounts * 20
+//
+//        Банката решила дека сака да направи измена, односно да го отстрани најмалку важниот клиент од Golden листата и да го
+//        стави на
+//        крај на Normal листата. Потоа, да го отстрани најмногу важниот клиент од Normal листата и да го стави на крај на
+//        Golden листата.
+//
+//        Внимавај: Ако има повеќе клиенти со иста важност, се отстранува првиот.
+//
+//        Влез:
+//        Во првиот ред е даден броот на клиенти од Normal листата.
+//        Во вториот ред е даден броот на дискусии од Golden листата.
+//        Во секоj следен ред се дадени податоци за еден клиент, одделени со празно место, во формат id loyalty accounts.
+//        Притоа, прво се дадони податоците за клиентите од Normal листата, по што следуваат податоците за клиентите од
+//        Golden листата.
+//
+//        Излез:
+//        Во првиот ред id на сите клиенти од Normal листата.
+//        Во вториот ред id на сите клиенти од Golden листата.
 
     public static void bank(SLL<Client> normal, SLL<Client> golden) {
-        // TODO: ИМПЛЕМЕНТИРАЈТЕ ЈА ФУНКЦИЈАТА
-       SLLNode<Client> goldenIterator = golden.getFirst().succ;
-       SLLNode<Client> leastImportantClientGolden = golden.getFirst();
+        SLLNode<Client> goldenIterator = golden.getFirst().succ;
+        SLLNode<Client> leastImportantClientGolden = golden.getFirst();
 
-//       SLLNode<Client> minNode = null;
-//       int min = 999999999;
+        while(goldenIterator != null) {
+            if(goldenIterator.element.calculateImportance() < leastImportantClientGolden.element.calculateImportance()) {
+                leastImportantClientGolden = goldenIterator;
+            }
+            goldenIterator = goldenIterator.succ;
+        }
 
-       while(goldenIterator != null){
-//           if(goldenIterator.element.calculateImportance() < min){
-//               minNode = goldenIterator;
-//               min = goldenIterator.element.calculateImportance();
-//           }
-           if(goldenIterator.element.calculateImportance() < leastImportantClientGolden.element.calculateImportance()){
-               leastImportantClientGolden = goldenIterator;
-           }
+        golden.delete(leastImportantClientGolden);
+        normal.insertLast(leastImportantClientGolden.element);
 
-           goldenIterator = goldenIterator.succ;
-       }
+        SLLNode<Client> normalIterator = normal.getFirst().succ;
+        SLLNode<Client> mostImportantClientNormal = normal.getFirst();
 
-       golden.delete(leastImportantClientGolden);
-       normal.insertLast(leastImportantClientGolden.element);
+        while (normalIterator != null) {
+            if (normalIterator.element.calculateImportance() > mostImportantClientNormal.element.calculateImportance()) {
+                mostImportantClientNormal = normalIterator;
+            }
 
-       SLLNode<Client> mostImportantClientNormal = normal.getFirst();
-       SLLNode<Client> normalIterator = normal.getFirst().succ;
+            normalIterator = normalIterator.succ;
+        }
 
-       while(normalIterator != null){
-           int importance = normalIterator.element.calculateImportance();
-           if(importance > mostImportantClientNormal.element.calculateImportance()){
-               mostImportantClientNormal = normalIterator;
-           }
-           normalIterator = normalIterator.succ;
-       }
-
-       normal.delete(mostImportantClientNormal);
-       golden.insertLast(mostImportantClientNormal.element);
+        normal.delete(mostImportantClientNormal);
+        golden.insertLast(mostImportantClientNormal.element);
     }
+
+    // 5636 3606 6698
+    //  1178 1705
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
