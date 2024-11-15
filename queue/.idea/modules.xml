@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/DeckRevealedIncreasing/DeckRevealedIncreasing.iml" filepath="$PROJECT_DIR$/DeckRevealedIncreasing/DeckRevealedIncreasing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Secret/Secret.iml" filepath="$PROJECT_DIR$/Secret/Secret.iml" />
+      <module fileurl="file://$PROJECT_DIR$/StudentsUnableToEatLunch/StudentsUnableToEatLunch.iml" filepath="$PROJECT_DIR$/StudentsUnableToEatLunch/StudentsUnableToEatLunch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TimeNeededToBuyTickets/TimeNeededToBuyTickets.iml" filepath="$PROJECT_DIR$/TimeNeededToBuyTickets/TimeNeededToBuyTickets.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/queue.iml" filepath="$PROJECT_DIR$/.idea/queue.iml" />
+    </modules>
+  </component>
+</project>
