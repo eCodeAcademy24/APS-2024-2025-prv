@@ -17,10 +17,10 @@ public class CheckXMLJava {
 
         ArrayStack<String> stack = new ArrayStack<String>(n);
 
-        for (int i = 0; i < n; i++) {
+        for(int i = 0; i < n; i++) {
             if (redovi[i].charAt(0) == '[') {
                 if (redovi[i].charAt(1) == '/') {
-                    if (!stack.peek().equals(redovi[i].substring(2, redovi[i].length() - 1))) {
+                    if(!stack.peek().equals(redovi[i].substring(2, redovi[i].length() - 1))) {
                         valid = 0;
                         break;
                     } else {
@@ -33,7 +33,6 @@ public class CheckXMLJava {
         }
 
         System.out.println(valid);
-
         br.close();
     }
 }

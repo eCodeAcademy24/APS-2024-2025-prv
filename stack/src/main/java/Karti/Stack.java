@@ -1,4 +1,4 @@
-package Bukvi;
+package Karti;
 
 public interface Stack<E> {
 
