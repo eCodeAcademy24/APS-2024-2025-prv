@@ -189,18 +189,18 @@ public class Main {
             return;
         }
 
-        DLLNode<Integer> current = lista.getFirst();
+        DLLNode<Integer> iterator = lista.getFirst();
         DLLNode<Integer> targetNode = null;
 
-        while (current != null) {
-            if (current.element.equals(M)) {
-                targetNode = current;
+        while (iterator != null) {
+            if(iterator.element.equals(M)) {
+                targetNode = iterator;
                 break;
             }
-            current = current.succ;
+            iterator = iterator.succ;
         }
 
-        if (targetNode == null) {
+        if(targetNode == null) {
             System.out.println("Elementot ne postoi vo listata");
             return;
         }
@@ -208,16 +208,21 @@ public class Main {
         int size = lista.getSize();
         k = k % size;
 
-        for (int i = 0; i < k; i++) {
+        // komentarite se za primerot:
+        // 5
+        //1 2 3 4 5
+        //3
+        //2
+        for(int i = 0; i < k; i++) {
             if (targetNode == lista.getFirst()) {
                 lista.deleteFirst();
                 lista.insertLast(M);
                 targetNode = lista.getLast();
             } else {
-                DLLNode<Integer> pred = targetNode.pred;
-                lista.delete(targetNode);
-                lista.insertBefore(M, pred);
-                targetNode = pred.pred;
+                DLLNode<Integer> pred = targetNode.pred; // 1 2 3 4 5, 2 - pred
+                lista.delete(targetNode); // 1 2 [3] 4 5, 3 delete
+                lista.insertBefore(M, pred); // 1 [3] 2 4 5
+                targetNode = pred.pred; // 1 3 2 4 5, od 2 pred go postavuvame na 3
             }
         }
     }
@@ -228,7 +233,7 @@ public class Main {
         int n = input.nextInt();
 
         DLL<Integer> lista = new DLL<>();
-        for (int i = 0; i < n; i++) {
+        for(int i = 0; i < n; i++) {
             lista.insertLast(input.nextInt());
         }
 

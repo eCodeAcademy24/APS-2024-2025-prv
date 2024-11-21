@@ -185,11 +185,12 @@ class DLL<E> {
 
 public class Main {
     public static void resenie(DLL<Integer> lista, int k) {
-        if (lista.getFirst() == null || lista.getFirst().succ == null || k == 0) {
+        if(lista.getFirst() == null || lista.getFirst().succ == null || k == 0) {
             return;
         }
 
         int size = lista.getSize();
+
         k = k % size;
         if (k == 0) {
             return;
@@ -219,7 +220,7 @@ public class Main {
         int n = input.nextInt();
 
         DLL<Integer> lista = new DLL<>();
-        for (int i = 0; i < n; i++) {
+        for(int i = 0; i < n; i++) {
             lista.insertLast(input.nextInt());
         }
 
